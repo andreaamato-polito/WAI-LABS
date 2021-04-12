@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo Manager</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/da7613a297.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="CSS/styles.css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+
+        <button class="navbar-toggler nav-elements" type="button" data-toggle="collapse" data-target="#sidebar, #navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand nav-element brand" href="#"><i class="fas fa-check-double"></i> ToDo Manager</a>
+
+        <div class="collapse navbar-collapse search-box nav-element" id="navbarTogglerDemo03">
+            <form class="form-inline my-2 my-lg-0">
+                <input style="padding-left: 300" class="form-control mr-sm-2" type="search" placeholder="Search"
+                    aria-label="Search">
+            </form>
+        </div>
+
+        <div class="user-icon nav-element">
+            <i class="fas fa-user-circle fa-2x icon"></i>
+        </div>
+
+    </nav>
+    <section>
+        <div class="container content">
+            <div class="row">
+                <div id="sidebar" class="col-md-4 collapse d-sm-block">
+                    <div class="container">
+                        <a class="dropdown-item filter-all" href="#">All</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item filter-important" href="#">Important</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item filter-today" href="#">Today</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item filter-week" href="#">Next 7 Days</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item filter-private" href="#">Private</a>
+                    </div>
+
+                </div>
+                <div class="col-md-8">
+                    <div class="container tasks">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button type="button" class="btn btn-success add-button">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>

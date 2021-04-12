@@ -1,0 +1,71 @@
+.icon{
+    color: whitesmoke;
+}
+
+.sidebar{
+    background-color: honeydew;
+    padding-top: 1rem;
+    padding-bottom: 100%;
+}
+
+.content{
+    /*display: inline-block;*/
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.main-content{
+    padding-top: 1%;
+}
+
+.date{
+    font-size: 12px;
+}
+
+.important{
+    color: red;
+}
+
+/*
+.filter:hover{
+    border-radius: 2px;
+    background-color: #30a444;
+    padding: 5px;
+}
+*/
+
+.add-button{
+    position:fixed;
+    border-radius: 100%;
+    bottom: 2rem;
+    right: 2rem;   
+}
+
+
+.search-box{
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.brand{
+    padding-right: 10%;
+}
+
+
+.tasks{
+    width: 100%;
+}
+.nav-element{
+    text-align: center;
+    margin: auto;
+}
+
+#sidebar{
+    padding-top: 1%;
+}
+
+/*
+@media screen and (max-width: 600px) {
+
+}
+*/

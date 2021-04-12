@@ -1,0 +1,46 @@
+.App {
+  text-align: center;
+}
+
+.add-button{
+  position:fixed;
+  border-radius: 100%;
+  bottom: 2rem;
+  right: 2rem;   
+}
+
+.date{
+  font-size: 14px;
+}
+
+.filter{
+  padding-top: 3.5%;
+  padding-bottom: 3.5%;
+  color: rgb(114, 110, 110);
+}
+
+.filters{
+  padding-top: 1rem;
+  padding-left: 2rem;
+}
+
+.icon{
+  color: whitesmoke;
+  padding-left: 65%;
+}
+
+.selected{
+  background-color: #28a745;
+  color: whitesmoke;
+}
+
+.filter-divider{
+  margin: 0;
+  visibility: hidden;
+}
+
+
+.main-content{
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
