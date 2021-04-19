@@ -1,0 +1,87 @@
+.App {
+  text-align: center;
+}
+
+.add-button{
+  position:fixed;
+  border-radius: 100%;
+  bottom: 2rem;
+  right: 2rem;  
+  box-shadow: none!important;
+  outline: 0; 
+}
+
+.add-button:focus{
+  background-color: #28a745;
+}
+
+.date{
+  font-size: 14px;
+}
+
+.filter{
+  padding-top: 3.5%;
+  padding-bottom: 3.5%;
+  color: rgb(114, 110, 110);
+}
+
+.btn-light{
+  background-color: white;
+  color: rgb(95, 93, 93);
+
+}
+
+.filter-button{
+  width: 100%;
+  text-align: left;
+  border-radius: 0%; 
+  box-shadow: none!important;
+  outline: 0;
+}
+
+.filter-button:focus{
+  background-color: #28a745;
+}
+
+.filters{
+  padding-top: 1rem;
+  padding-left: 2rem;
+}
+
+.icon-logo{
+  color: whitesmoke;
+  width: 40px;
+  height: 40px;
+}
+
+
+
+.icon-plus{
+  width: 20px;
+  height: 25px;
+}
+
+
+.icon-user{
+  color: whitesmoke;
+  width: 35px;
+  height: 35px;
+  opacity: 0.6;
+  margin-left: 50%;
+}
+
+.selected{
+  background-color: #28a745;
+  color: whitesmoke;
+}
+
+.filter-divider{
+  margin: 0%;
+  visibility: hidden;
+}
+
+
+.main-content{
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
