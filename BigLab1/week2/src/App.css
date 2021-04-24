@@ -85,21 +85,3 @@
   padding-top: 2%;
   padding-bottom: 2%;
 }
-
-.important{
-  color: red;
-}
-
-.clickable{
-  cursor: pointer;
-}
-
-.form{
-  padding-top: 2%;
-  padding-bottom: 2%;
-  padding-left: 5%;
-}
-
-.error-msg{
-  padding-right: 10%;
-}

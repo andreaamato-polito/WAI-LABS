@@ -14,7 +14,6 @@ function Sidebar(props) {
                     <Filter key={n} name={n} chosen={n === selected} 
                     updateSelected={updateSelected} 
                     selectFilter={props.selectFilter}
-                    filterFunctions={props.filterFunctions}
                     />
             )}
         </Col>
@@ -32,7 +31,6 @@ function Filter(props) {
             <Button onClick={() => {
                 props.updateSelected(props.name)
                 props.selectFilter(props.name)
-                props.filterFunctions[props.name]()
             }} 
             variant={color} 
             href="#"
@@ -45,5 +43,27 @@ function Filter(props) {
     );
 
 }
+
+{/*
+function Filter(props) {
+    if (props.chosen) {
+        return (
+            <React.Fragment>
+                <Dropdown.Item className="filter selected" href="#">{props.name}</Dropdown.Item>
+                <Dropdown.Divider className="filter-divider" />
+            </React.Fragment>
+        );
+    }
+    else {
+        return (
+            <React.Fragment>
+                <Dropdown.Item onClick={()=>props.updateSelected(props.name)} className="filter" href="#">{props.name}</Dropdown.Item>
+                <Dropdown.Divider className="filter-divider" />
+            </React.Fragment>
+        );
+    }
+}
+
+*/}
 
 export default Sidebar;
