@@ -50,7 +50,7 @@ function EditTaskForm(props) {
                         onChange={ev => setPriv(ev.target.value === 'on')}
                     />
                     <Form.Control
-                        type='date'
+                        type='datetime-local'
                         onChange={ev => setDate(ev.target.value)}
                     />
                 </Form.Group>

@@ -57,7 +57,7 @@ function AddTaskForm(props) {
                         onChange={ev => setPriv(ev.target.value === 'on')}
                     />
                     <Form.Control
-                        type='date'
+                        type='datetime-local'
                         onChange={ev => setDate(ev.target.value)} />
                     {/*<Form.Control type="datetime-local" onChange={ev => setDate(dayjs(ev.taget.value))}/>*/}
                 </Form.Group>
