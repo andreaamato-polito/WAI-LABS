@@ -1,7 +1,9 @@
-import { Row, Button, Modal, Form } from 'react-bootstrap';
+import { Row, Button } from 'react-bootstrap';
 import { Plus } from 'react-bootstrap-icons';
 import Sidebar from './Sidebar.js';
-import TaskList from './TaskList';
+import TaskList from './TaskList.js';
+import AddTaskForm from './AddTaskForm.js';
+import EditTaskForm from './EditTaskForm.js';
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 
@@ -19,10 +21,16 @@ function MainContent(props) {
     const updateSelected = (name) => setSelected(name);
     const [tasks, setTasks] = useState([...fakeTasks]);
     const [show, setShow] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
+
+    const [taskName, setTaskName] = useState('');
 
     const handleClose = () => setShow(false);
-
     const handleShow = () => setShow(true);
+
+    const handleCloseEdit = () => setShowEdit(false);
+    const handleShowEdit = () => setShowEdit(true);
+
 
     const deleteTask = (name) => {
         setTasks((oldTasks) => oldTasks.filter(t => t.name !== name));
@@ -33,6 +41,11 @@ function MainContent(props) {
         setTasks(oldTasks => [...oldTasks, task]);
         fakeTasks = [...fakeTasks, task];
     };
+
+    const updateTask = (task) =>{
+        setTasks(oldTasks => [...oldTasks.filter(t=>t.name!==task.name), task]);
+        fakeTasks = [...fakeTasks.filter(t=>t.name!==task.name), task];
+    }
 
     const filterAll = () => {
         setTasks(fakeTasks);
@@ -85,9 +98,27 @@ function MainContent(props) {
                 selectFilter={updateSelected}
                 filterFunctions={filterFunctions}
             />
-            <TaskList filter={selected} tasks={tasks} deleteTask={deleteTask} />
+            <TaskList 
+            filter={selected} 
+            tasks={tasks} 
+            deleteTask={deleteTask} 
+            handleShow={handleShowEdit}
+            previousName={(name)=>setTaskName(name)}
+            />
             <AddTask handleShow={handleShow} />
-            <TaskForm show={show} handleClose={handleClose} addTask={addTask} tasks={tasks} />
+            <AddTaskForm 
+                show={show} 
+                handleClose={handleClose} 
+                addTask={addTask} 
+                tasks={tasks}
+            />
+            <EditTaskForm
+                show={showEdit}
+                handleClose={handleCloseEdit}
+                updateTask={updateTask}
+                tasks={tasks}
+                taskName={taskName}
+            />
         </Row>
     );
 }
@@ -97,83 +128,6 @@ function AddTask(props) {
         <Button variant="success" className="add-button" onClick={props.handleShow}>
             <Plus className="icon-plus" />
         </Button>
-    );
-}
-
-function TaskForm(props) {
-    const [name, setName] = useState('');
-    const [urgent, setUrgent] = useState(false);
-    const [priv, setPriv] = useState(false);
-    const [date, setDate] = useState('');
-    const [errorMessage, setErrorMessage] = useState();
-
-    const haldleSubmit = (event) => {
-        event.preventDefault();
-        if (name === '' || props.tasks.map(t => t.name).includes(name) || date === '') {
-
-            if (date === '')
-                setErrorMessage('A task must have a date');
-            if (props.tasks.map(t => t.name).includes(name))
-                setErrorMessage('Task descriptions must be unique');
-            if (name === '')
-                setErrorMessage('A task must have a description');
-
-        } else {
-            setErrorMessage('');
-            setDate('');
-            setName('');
-            const task = { name: name, urgent: urgent, priv: priv, date: date };
-            props.addTask(task);
-            props.handleClose();
-        }
-    };
-
-    return (
-        <Modal show={props.show} onHide={props.handleClose}>
-            <Modal.Header>
-                <Modal.Title>Add a new task</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form.Group>
-                    <Form.Control
-                        type="text"
-                        placeholder="Description"
-                        onChange={ev => setName(ev.target.value)}
-                    />
-                    <Form.Check
-                        className="form"
-                        label="Important"
-                        type={'checkbox'}
-                        id={'check-important'}
-                        onChange={ev => setUrgent(ev.target.value === 'on')}
-                    />
-                    <Form.Check
-                        className="form"
-                        label="Private"
-                        type={'checkbox'}
-                        id={'checkbox-private'}
-                        onChange={ev => setPriv(ev.target.value === 'on')}
-                    />
-                    <Form.Control
-                        type='date'
-                        onChange={ev => setDate(ev.target.value)} />
-                    {/*<Form.Control type="datetime-local" onChange={ev => setDate(dayjs(ev.taget.value))}/>*/}
-                </Form.Group>
-            </Modal.Body>
-            <Modal.Footer>
-                <h6 className="important error-msg">{errorMessage}</h6>
-                <Button variant="secondary" onClick={() => { 
-                    setDate('');
-                    setName('');
-                    setErrorMessage(''); 
-                    props.handleClose() }}>
-                    Close
-                </Button>
-                <Button variant="success" onClick={haldleSubmit}>
-                    Add Task
-                </Button>
-            </Modal.Footer>
-        </Modal>
     );
 }
 
