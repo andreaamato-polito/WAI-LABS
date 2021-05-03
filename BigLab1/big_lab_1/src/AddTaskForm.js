@@ -45,16 +45,16 @@ function AddTaskForm(props) {
                     <Form.Check
                         className="form"
                         label="Important"
-                        type={'radio'}
-                        id={'radio-important'}
-                        onChange={ev => setUrgent(ev.target.value === 'on')}
+                        type={'checkbox'}
+                        id={'checkbox-important'}
+                        onChange={() => setUrgent( important => !important )}
                     />
                     <Form.Check
                         className="form"
                         label="Private"
-                        type={'radio'}
-                        id={'radio-private'}
-                        onChange={ev => setPriv(ev.target.value === 'on')}
+                        type={'checkbox'}
+                        id={'checkbox-private'}
+                        onChange={() => setPriv( priv => !priv )}
                     />
                     <Form.Control
                         type='datetime-local'
