@@ -1,5 +1,6 @@
 import { Button, Modal, Form } from 'react-bootstrap';
 import React, { useState } from 'react';
+import dayjs from 'dayjs';
 
 
 function AddTaskForm(props) {
@@ -11,8 +12,10 @@ function AddTaskForm(props) {
 
     const haldleSubmit = (event) => {
         event.preventDefault();
-        if (name === '' || props.tasks.map(t => t.name).includes(name) || date === '') {
+        if (name === '' || props.tasks.map(t => t.name).includes(name) || date === '' || dayjs(date).isBefore(dayjs(), 'day')) {
 
+            if(dayjs(date).isBefore(dayjs(), 'day'))
+                setErrorMessage('Select a valid date');
             if (date === '')
                 setErrorMessage('A task must have a date');
             if (props.tasks.map(t => t.name).includes(name))
