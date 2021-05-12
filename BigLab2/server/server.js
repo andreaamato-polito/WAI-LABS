@@ -48,17 +48,18 @@ app.get('/api/tasks/:id', (req, res) => {
 });
 
 app.post('/api/tasks', async (req, res) => {
-    let id = req.body.id;
     let description = req.body.description;
     let important = req.body.important;
     let prvt = req.body.private;
     let deadline = req.body.deadline;
     let completed = req.body.completed;
     let user = req.body.user;
+    
 
     try {
+        let id = await dao.getLastId();
         await dao.createTask({
-            id: id,
+            id: ++id,
             description: description,
             important: important,
             private: prvt,

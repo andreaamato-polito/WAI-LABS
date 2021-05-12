@@ -153,6 +153,25 @@ exports.getTask = (id) => {
     });
 };
 
+
+exports.getLastId = () => {
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT * FROM tasks ORDER BY ID DESC LIMIT 1';
+        db.get(sql, (err, row) =>{
+            if (err){
+                reject(err);
+                return;
+            }
+            if (row == undefined){
+                reject(0);
+            } else {
+                const id = row.id;
+                resolve(id);
+            }
+        });
+    });
+};
+
 exports.createTask = (task) => {
     return new Promise((resolve, reject) =>{
         const sql = 'INSERT INTO tasks(id, description, important, private, deadline, completed, user) VALUES(?, ?, ?, ?, DATE(?), ?, ?)';
@@ -204,3 +223,5 @@ exports.markTask = (task) => {
         });
     });
 };
+
+
