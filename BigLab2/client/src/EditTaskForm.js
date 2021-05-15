@@ -1,22 +1,37 @@
 import { Button, Modal, Form } from 'react-bootstrap';
 import React, { useState } from 'react';
 
+function Task(description, important, priv, deadline, completed, user) {
+    this.description = description,
+        this.important = important,
+        this.priv = priv,
+        this.deadline = deadline,
+        this.completed = completed,
+        this.user = user
+};
+
+
 function EditTaskForm(props) {
-    const [urgent, setUrgent] = useState(false);
-    const [priv, setPriv] = useState(false);
-    const [date, setDate] = useState('');
+    const [important, setImportant] = useState(0);
+    const [priv, setPriv] = useState(0);
+    const [deadline, setDeadline] = useState('');
+    const [completed, setCompleted] = useState(0);
+    const [user, setUser] = useState(1)
     const [errorMessage, setErrorMessage] = useState();
 
     const haldleSubmit = (event) => {
         event.preventDefault();
 
-        if (date === '') {
+        if (deadline === '') {
             setErrorMessage('A task must have a date');
         } else {
             setErrorMessage('');
-            setUrgent(false);
-            setPriv(false);
-            const task = { name: props.taskName, urgent: urgent, priv: priv, date: date };
+            setImportant(0);
+            setPriv(0);
+           
+            //const task = { name: props.taskName, urgent: important, priv: priv, date: deadline };
+            const task = new Task(props.taskName, important, priv, deadline, completed, user);
+            
             props.updateTask(task); 
             props.handleClose();
         }
@@ -40,7 +55,7 @@ function EditTaskForm(props) {
                         label="Important"
                         type={'checkbox'}
                         id={'checkbox-important'}
-                        onChange={() => setUrgent( important => !important )}
+                        onChange={() => setImportant( important => !important )}
                     />
                     <Form.Check
                         className="form"
@@ -51,7 +66,7 @@ function EditTaskForm(props) {
                     />
                     <Form.Control
                         type='datetime-local'
-                        onChange={ev => setDate(ev.target.value)}
+                        onChange={ev => setDeadline(ev.target.value)}
                     />
                 </Form.Group>
             </Modal.Body>

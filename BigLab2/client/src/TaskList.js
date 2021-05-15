@@ -8,7 +8,7 @@ function TaskList(props) {
         <Col xs={12} md={8}>
             <h4 className="main-content"><strong>Filter: </strong>{props.filter}</h4>
             {props.tasks.map((t) => <Task
-                key={t.name}
+                key={t.description} 
                 task={t}
                 delete={props.deleteTask}
                 handleShow={props.handleShow}
@@ -27,17 +27,17 @@ function Task(props) {
 
     if (props.task.priv)
         status = <PersonSquare />
-    if (props.task.urgent)
+    if (props.task.important)
         important = "important";
-    if (props.task.date !== undefined)
-        date = new dayjs(props.task.date)
+    if (props.task.deadline !== undefined)
+        date = new dayjs(props.task.deadline)
     
     return (
         <React.Fragment>
 
             <Row>
                 <Col>
-                    <Form.Check className={important} label={props.task.name} />
+                    <Form.Check className={important} label={props.task.description} /> 
                 </Col>
                 <Col xs={2}>
                     {status}
@@ -48,14 +48,14 @@ function Task(props) {
                 </Col>
                 <Col xs={1}>
                     <span onClick={() => {
-                        props.previousName(props.task.name)
+                        props.previousName(props.task.description) 
                         props.handleShow()
                     }}>
                         <PencilSquare className="clickable" />
                     </span>
                 </Col>
                 <Col xs={1}>
-                    <span onClick={() => { props.delete(props.task.name) }}>
+                    <span onClick={() => { props.delete(props.task.description)  }}> 
                         <Trash className="clickable" />
                     </span>
                 </Col>
