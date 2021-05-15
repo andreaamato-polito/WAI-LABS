@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const dao = require('./dao');
 
 let app = new express();
-const PORT = 3000;
+const PORT = 3001;
 
 app.use(morgan('dev'));
 app.use(express.json());
