@@ -2,72 +2,34 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.add-button{
+  position:fixed;
+  border-radius: 100%;
+  bottom: 2rem;
+  right: 2rem;  
+  box-shadow: none!important;
+  outline: 0; 
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.add-button:focus{
+  background-color: #28a745;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.date{
+  font-size: 14px;
 }
 
-.App-link {
-  color: #61dafb;
+.filter{
+  padding-top: 3.5%;
+  padding-bottom: 3.5%;
+  color: rgb(114, 110, 110);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+.btn-light{
+  background-color: white;
+  color: rgb(95, 93, 93);
 
-.aside{
-  margin: 1rem;
 }
-
-.tasks{
-  padding-top: 1rem;
-}
-
-.taskhead{
-  font-size: 150%;
-  margin: 1rem
-}
-
-.selected{
-  background-color: green;
-}
-
-.fixed-right-bottom {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 1030;
-  margin: 0 1.5rem 1.5rem 0;
-  border-radius: 50%;
-}
-
-.icon-user{
-  color : whitesmoke;
-  opacity: 75%;
-}
-  
 
 .filter-button{
   width: 100%;
@@ -77,11 +39,67 @@
   outline: 0;
 }
 
+.filter-button:focus{
+  background-color: #28a745;
+}
+
+.filters{
+  padding-top: 1rem;
+  padding-left: 2rem;
+}
+
+.icon-logo{
+  color: whitesmoke;
+  width: 40px;
+  height: 40px;
+}
+
+
+
+.icon-plus{
+  width: 20px;
+  height: 25px;
+}
+
+
+.icon-user{
+  color: whitesmoke;
+  width: 35px;
+  height: 35px;
+  opacity: 0.6;
+  margin-left: 50%;
+}
+
+.selected{
+  background-color: #28a745;
+  color: whitesmoke;
+}
+
 .filter-divider{
-  margin: 0;
+  margin: 0%;
   visibility: hidden;
+}
+
+
+.main-content{
+  padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 .important{
   color: red;
+}
+
+.clickable{
+  cursor: pointer;
+}
+
+.form{
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-left: 5%;
+}
+
+.error-msg{
+  padding-right: 10%;
 }
