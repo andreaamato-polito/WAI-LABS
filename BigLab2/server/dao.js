@@ -103,6 +103,7 @@ exports.todayTasks = () => {
     });
 };
 
+//YYYY-MM-DD HH:mm
 exports.next7DaysTasks = () => {
     return new Promise((resolve, reject) => {
         const today = dayjs().format('YYYY-MM-DD');
@@ -174,8 +175,8 @@ exports.getLastId = () => {
 
 exports.createTask = (task) => {
     return new Promise((resolve, reject) =>{
-        const sql = 'INSERT INTO tasks(id, description, important, private, deadline, completed, user) VALUES(?, ?, ?, ?, DATE(?), ?, ?)';
-        db.run(sql, [task.id, task.description, task.important, task.private, task.deadline, task.completed, task.user], function (err){
+        const sql = 'INSERT INTO tasks(id, description, important, private, deadline, completed, user) VALUES(?, ?, ?, ?, ?, ?, ?)';
+        db.run(sql, [task.id, task.description, task.important, task.private, dayjs(task.deadline).format("YYYY-MM-DD HH:mm"), task.completed, task.user], function (err){
             if (err){
                 reject(err);
                 return;
@@ -200,8 +201,8 @@ exports.deleteTask = (id) => {
 
 exports.updateTask = (task) => {
     return new Promise((resolve, reject) => {
-        const sql = 'UPDATE tasks SET description=?, important=?, private=?, deadline=DATE(?), completed=?, user=? WHERE id=?';
-        db.run(sql, [task.description, task.important, task.private, task.deadline, task.completed, task.user, task.id], function (err) {
+        const sql = 'UPDATE tasks SET description=?, important=?, private=?, deadline=?, completed=?, user=? WHERE id=?';
+        db.run(sql, [task.description, task.important, task.private, dayjs(task.deadline).format("YYYY-MM-DD HH:mm"), task.completed, task.user, task.id], function (err) {
             if (err) {
                 reject(err);
                 return;

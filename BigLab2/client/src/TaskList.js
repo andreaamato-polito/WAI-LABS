@@ -43,7 +43,7 @@ function Task(props) {
                     {status}
                 </Col>
                 <Col className="date">
-                    {date===undefined ? undefined : date.format('dddd, MMMM D YYYY h:mm a')}
+                    { date.toString() === "Invalid Date" ? undefined : date.format('dddd, MMMM D YYYY h:mm a')}
                     {/*<DayJS format="dddd, MMMM D YYYY hh:mm a">{props.task.date}</DayJS>*/}
                 </Col>
                 <Col xs={1}>
