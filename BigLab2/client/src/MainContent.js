@@ -7,20 +7,10 @@ import EditTaskForm from './EditTaskForm.js';
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { Route, Switch } from 'react-router';
-
-
-function Task(id, description, important, priv, deadline, completed, user) {
-        this.id = id,
-        this.description = description,
-        this.important = important,
-        this.priv = priv,
-        this.deadline = deadline,
-        this.completed = completed,
-        this.user = user
-};
+import { loadAllTasks } from './API.js';
 
 function MainContent(props) {
-    const [tasks, setTasks] = useState(null); //here
+    const [tasks, setTasks] = useState(null);
     const [show, setShow] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
 
@@ -32,56 +22,34 @@ function MainContent(props) {
     const handleCloseEdit = () => setShowEdit(false);
     const handleShowEdit = () => setShowEdit(true);
 
+    const [update, setUpdate] = useState(true);
+
 
     const deleteTask = (description) => {
         setTasks((oldTasks) => oldTasks.filter(t => t.description !== description));
-        //fakeTasks = fakeTasks.filter(t => t.name !== name);
     };
 
     const addTask = (task) => {
         setTasks(oldTasks => [...oldTasks, task]);
-        //console.log(task);
-
-        //fakeTasks = [...fakeTasks, task];
     };
 
     const updateTask = (task) => {
         setTasks(oldTasks => [...oldTasks.filter(t => t.description !== task.description), task]);
-        //fakeTasks = [...fakeTasks.filter(t => t.name !== task.name), task];
     }
 
 
     useEffect(() => {
-        async function loadTasks() {
-            const response = await fetch('api/tasks');
-            const loadedTasks = await response.json();
-            const tasksArray = await loadedTasks.map(lt => {
-                const t = JSON.parse(JSON.stringify(lt));
-                return new Task(t.id, t.description, t.important, t.private, t.deadline, t.completed, t.user);
-            });
-
-            setTasks(tasksArray); //this 'worked'
-
+        if (update) {
+            async function loadTasks() {
+                const loadedTasks = await loadAllTasks();
+                setTasks(loadedTasks); //this 'worked'
+                setUpdate(false);
+            };
+            loadTasks();
         }
+    }, [update]);
 
-        loadTasks();
-    }, []);
-
-    /*
-    useEffect((task) => {
-        fetch('api/tasks', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(task),
-        }).catch(function (error) {
-            console.log('Failed to store data on server: ', error);
-        });
-
-    }, []);
-    */
-
+    
     if (tasks === null) {
         return (<Row></Row>);
     }
@@ -170,6 +138,7 @@ function MainContent(props) {
                 handleClose={handleClose}
                 addTask={addTask}
                 tasks={tasks}
+                setUpdate={setUpdate}
             />
             <EditTaskForm
                 show={showEdit}

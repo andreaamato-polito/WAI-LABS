@@ -1,14 +1,16 @@
 import { Button, Modal, Form } from 'react-bootstrap';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
+import { addNewTask } from './API';
+
 
 function Task(description, important, priv, deadline, completed, user) {
     this.description = description,
-        this.important = important,
-        this.priv = priv,
-        this.deadline = deadline,
-        this.completed = completed,
-        this.user = user
+    this.important = important,
+    this.priv = priv,
+    this.deadline = deadline,
+    this.completed = completed,
+    this.user = user
 };
 
 
@@ -40,18 +42,17 @@ function AddTaskForm(props) {
             setDeadline('');
             setDescription('');
             const task = new Task(description, important, priv, deadline, completed, user);
+
+            async function addTask() {
+                const response = await addNewTask(task);
+                if (response.ok) {
+                    props.addTask(task);
+                    props.setUpdate(true);
+                }
+            }
+
+            addTask();
             
-            const response = fetch('api/tasks', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(task),
-            }).catch(function (error) {
-                console.log('Failed to store data on server: ', error);
-            });
-            //if(response.ok)
-            props.addTask(task);
             props.handleClose();
         }
     };
