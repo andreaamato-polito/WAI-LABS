@@ -41,7 +41,7 @@ function AddTaskForm(props) {
             setDescription('');
             const task = new Task(description, important, priv, deadline, completed, user);
             
-            fetch('api/tasks', {
+            const response = fetch('api/tasks', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ function AddTaskForm(props) {
             }).catch(function (error) {
                 console.log('Failed to store data on server: ', error);
             });
-
+            //if(response.ok)
             props.addTask(task);
             props.handleClose();
         }

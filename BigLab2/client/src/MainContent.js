@@ -33,8 +33,8 @@ function MainContent(props) {
     const handleShowEdit = () => setShowEdit(true);
 
 
-    const deleteTask = (name) => {
-        setTasks((oldTasks) => oldTasks.filter(t => t.name !== name));
+    const deleteTask = (description) => {
+        setTasks((oldTasks) => oldTasks.filter(t => t.description !== description));
         //fakeTasks = fakeTasks.filter(t => t.name !== name);
     };
 
@@ -46,7 +46,7 @@ function MainContent(props) {
     };
 
     const updateTask = (task) => {
-        setTasks(oldTasks => [...oldTasks.filter(t => t.name !== task.name), task]);
+        setTasks(oldTasks => [...oldTasks.filter(t => t.description !== task.description), task]);
         //fakeTasks = [...fakeTasks.filter(t => t.name !== task.name), task];
     }
 
@@ -65,7 +65,7 @@ function MainContent(props) {
         }
 
         loadTasks();
-    }, [tasks]);
+    }, []);
 
     /*
     useEffect((task) => {
