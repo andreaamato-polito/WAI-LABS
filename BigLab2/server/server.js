@@ -16,6 +16,12 @@ app.get('/api/tasks', (req, res) => {
         .catch((error) => { res.status(500).json(error); });
 });
 
+app.get('/api/tasks/All', (req, res) => {
+    dao.listTasks()
+        .then((tasks) => { res.json(tasks); })
+        .catch((error) => { res.status(500).json(error); });
+});
+
 app.get('/api/tasks/important', (req, res) => {
     dao.importantTasks()
         .then((tasks) => { res.json(tasks); })
@@ -87,7 +93,7 @@ app.put('/api/tasks/:id', async (req, res) => {
     const id = req.params.id;
     let description = req.body.description;
     let important = req.body.important;
-    let prvt = req.body.private;
+    let prvt = req.body.priv;
     let deadline = req.body.deadline;
     let completed = req.body.completed;
     let user = req.body.user;

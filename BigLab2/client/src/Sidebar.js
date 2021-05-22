@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Dropdown, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { applyFilter } from './API.js'
 
 function Sidebar(props) {
     const [selected, setSelected] = useState(props.filter);
@@ -13,6 +14,7 @@ function Sidebar(props) {
                 (n) =>
                     <Filter key={n} name={n} chosen={n === selected}
                         updateSelected={updateSelected}
+                        filterTasks={props.filterTasks}
                     />
             )}
         </Col>
@@ -29,7 +31,12 @@ function Filter(props) {
         <div>
             <Link to={{pathname: '/' + props.name.replace(/\s+/g, ''), state: {filter: props.name}}}>
                 <Button onClick={() => {
-                    props.updateSelected(props.name)
+                    props.updateSelected(props.name);
+                    async function updateTasks(){
+                        const filteredTasks = await applyFilter(props.name.replace(/\s+/g, ''));
+                        props.filterTasks(filteredTasks);
+                    }
+                    updateTasks();
                 }}
                     variant={color}
                     className="filter-button"
@@ -45,3 +52,12 @@ function Filter(props) {
 }
 
 export default Sidebar;
+
+/*
+async function loadTasks() {
+                const loadedTasks = await loadAllTasks();
+                setTasks(loadedTasks); //this 'worked'
+                setUpdate(false);
+            };
+            loadTasks();
+*/

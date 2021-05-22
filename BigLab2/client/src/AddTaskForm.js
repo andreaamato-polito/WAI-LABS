@@ -46,7 +46,6 @@ function AddTaskForm(props) {
             async function addTask() {
                 const response = await addNewTask(task);
                 if (response.ok) {
-                    props.addTask(task);
                     props.setUpdate(true);
                 }
             }

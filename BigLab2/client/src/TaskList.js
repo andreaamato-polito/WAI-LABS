@@ -2,17 +2,20 @@ import React from 'react';
 import { PencilSquare, Trash, PersonSquare } from 'react-bootstrap-icons';
 import { Row, Col, Form, Dropdown } from 'react-bootstrap';
 import dayjs from 'dayjs';
+import { deleteTask, markTask } from './API';
 
 function TaskList(props) {
     return (
         <Col xs={12} md={8}>
             <h4 className="main-content"><strong>Filter: </strong>{props.filter}</h4>
             {props.tasks.map((t) => <Task
-                key={t.description} 
+                key={t.id} 
                 task={t}
                 delete={props.deleteTask}
                 handleShow={props.handleShow}
                 previousName={props.previousName}
+                previousId={props.previousId}
+                update={props.update}
             />)}
         </Col>
     );
@@ -37,7 +40,21 @@ function Task(props) {
 
             <Row>
                 <Col>
-                    <Form.Check className={important} label={props.task.description} /> 
+                    <Form.Check 
+                        className={important} 
+                        label={props.task.description} 
+                        checked={props.task.completed===1}
+                        onChange={() => {
+                            async function toggle() {
+                                const response = await markTask(props.task.id);
+                                if (response.ok) {                                    
+                                    props.update(true);
+                                }
+                            }
+                
+                            toggle();
+                        }}
+                        /> 
                 </Col>
                 <Col xs={2}>
                     {status}
@@ -48,14 +65,24 @@ function Task(props) {
                 </Col>
                 <Col xs={1}>
                     <span onClick={() => {
-                        props.previousName(props.task.description) 
-                        props.handleShow()
+                        props.previousName(props.task.description); 
+                        props.previousId(props.task.id); 
+                        props.handleShow();
                     }}>
                         <PencilSquare className="clickable" />
                     </span>
                 </Col>
                 <Col xs={1}>
-                    <span onClick={() => { props.delete(props.task.description)  }}> 
+                    <span onClick={() => { 
+                        async function deleteT() {
+                            const response = await deleteTask(props.task.id);
+                            if (response.ok) {
+                                props.delete(props.task.id);
+                                //props.setUpdate(true);
+                            }
+                        }
+                        deleteT();
+                        }}> 
                         <Trash className="clickable" />
                     </span>
                 </Col>

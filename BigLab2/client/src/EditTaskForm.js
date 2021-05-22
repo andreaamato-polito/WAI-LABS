@@ -1,5 +1,7 @@
 import { Button, Modal, Form } from 'react-bootstrap';
 import React, { useState } from 'react';
+import { updateTask } from './API';
+
 
 function Task(description, important, priv, deadline, completed, user) {
     this.description = description,
@@ -12,6 +14,7 @@ function Task(description, important, priv, deadline, completed, user) {
 
 
 function EditTaskForm(props) {
+    const [description, setDescription] = useState(props.taskName);
     const [important, setImportant] = useState(0);
     const [priv, setPriv] = useState(0);
     const [deadline, setDeadline] = useState('');
@@ -30,9 +33,18 @@ function EditTaskForm(props) {
             setPriv(0);
            
             //const task = { name: props.taskName, urgent: important, priv: priv, date: deadline };
-            const task = new Task(props.taskName, important, priv, deadline, completed, user);
+            const task = new Task(description, important, priv, deadline, completed, user);
             
-            props.updateTask(task); 
+            async function updateT() {
+                const response = await updateTask(props.taskId, task);
+                if (response.ok) {
+                     props.setUpdate(true);
+                }
+            }
+
+            updateT();
+
+            //props.updateTask(task); 
             props.handleClose();
         }
     }
@@ -47,8 +59,8 @@ function EditTaskForm(props) {
                 <Form.Group>
                     <Form.Control
                         type='text'
-                        value={props.taskName}
-                        readOnly
+                        placeholder={props.taskName}
+                        onChange={ev => setDescription(ev.target.value)}
                     />
                     <Form.Check
                         className="form"

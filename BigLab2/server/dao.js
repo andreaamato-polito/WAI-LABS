@@ -82,9 +82,8 @@ exports.privateTasks = () => {
 
 exports.todayTasks = () => {
     return new Promise((resolve, reject) => {
-        const date = dayjs().format('YYYY-MM-DD');
-        const sql = "SELECT * FROM tasks WHERE deadline=?";
-        db.all(sql, date, (err, rows) =>{
+        const sql = "SELECT * FROM tasks";
+        db.all(sql, (err, rows) =>{
             if(err){
                 reject(err);
                 return;
@@ -106,10 +105,8 @@ exports.todayTasks = () => {
 //YYYY-MM-DD HH:mm
 exports.next7DaysTasks = () => {
     return new Promise((resolve, reject) => {
-        const today = dayjs().format('YYYY-MM-DD');
-        const nextWeek = dayjs().add(7, 'day').format('YYYY-MM-DD');
-        const sql = "SELECT * FROM tasks WHERE deadline>? AND deadline <=?";
-        db.all(sql, [today, nextWeek], (err, rows) =>{
+       const sql = "SELECT * FROM tasks";
+        db.all(sql, (err, rows) =>{
             if(err){
                 reject(err);
                 return;
