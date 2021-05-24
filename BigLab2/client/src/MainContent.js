@@ -25,6 +25,8 @@ function MainContent(props) {
 
     const [update, setUpdate] = useState(true);
 
+    const [updateFilter, setUpdateFilter] = useState(true);
+
 
     const deleteTask = (id) => {
         setTasks((oldTasks) => oldTasks.filter(t => t.id !== id));
@@ -38,7 +40,7 @@ function MainContent(props) {
         setTasks(oldTasks => [...oldTasks.filter(t => t.description !== task.description), task]);
     }
 
-
+    
     useEffect(() => {
         if (update) {
             async function loadTasks() {
@@ -62,24 +64,30 @@ function MainContent(props) {
                     <Sidebar names={props.filters} filter='All' filterTasks={setTasks}/>
                     <TaskList
                         filter='All'
+                        filterTasks={setTasks}
                         tasks={tasks}
                         deleteTask={deleteTask}
                         handleShow={handleShowEdit}
                         previousName={(name) => setTaskName(name)}
                         previousId={(id) => setTaskId(id)}
                         update={setUpdate}
+                        updateFilter={updateFilter}
+                        setUpdateFilter={setUpdateFilter}
                     />
                 </Route>
                 <Route path='/All'>
                     <Sidebar names={props.filters} filter='All' filterTasks={setTasks}/>
                     <TaskList
                         filter='All'
+                        filterTasks={setTasks}
                         tasks={tasks}
                         deleteTask={deleteTask}
                         handleShow={handleShowEdit}
                         previousName={(name) => setTaskName(name)}
                         previousId={(id) => setTaskId(id)}
                         update={setUpdate}
+                        updateFilter={updateFilter}
+                        setUpdateFilter={setUpdateFilter}
                     />
                 </Route>
 
@@ -87,59 +95,60 @@ function MainContent(props) {
                     <Sidebar names={props.filters} filter='Important' filterTasks={setTasks}/>
                     <TaskList
                         filter='Important'
-                        tasks={tasks.filter(t=> t.important === 1)}
+                        filterTasks={setTasks}
+                        tasks={tasks}
                         deleteTask={deleteTask}
                         handleShow={handleShowEdit}
                         previousName={(name) => setTaskName(name)}
                         previousId={(id) => setTaskId(id)}
                         update={setUpdate}
+                        updateFilter={updateFilter}
+                        setUpdateFilter={setUpdateFilter}
                     />
                 </Route>
                 <Route path='/Today'>
                     <Sidebar names={props.filters} filter='Today' filterTasks={setTasks}/>
                     <TaskList
                         filter='Today'
-                        tasks={tasks.filter(t => {
-                            if (t.deadline === undefined)
-                                return false;
-                            let taskDate = new dayjs(t.deadline);
-                            return taskDate.isSame(dayjs(), 'day');
-                        })}
+                        filterTasks={setTasks}
+                        tasks={tasks}
                         deleteTask={deleteTask}
                         handleShow={handleShowEdit}
                         previousName={(name) => setTaskName(name)}
                         previousId={(id) => setTaskId(id)}
                         update={setUpdate}
+                        updateFilter={updateFilter}
+                        setUpdateFilter={setUpdateFilter}
                     />
                 </Route>
                 <Route path='/Next7Days'>
                     <Sidebar names={props.filters} filter='Next 7 Days' filterTasks={setTasks}/>
                     <TaskList
                         filter='Next 7 Days'
-                        tasks={tasks.filter(t => {
-                            if (t.deadline === undefined)
-                                return false;
-                            let taskDate = new dayjs(t.deadline);
-                            let next7Days = dayjs().add(8, 'day');
-                            return taskDate.isAfter(dayjs(), 'day') && taskDate.isBefore(next7Days, 'day');
-                        })}
+                        filterTasks={setTasks}
+                        tasks={tasks}
                         deleteTask={deleteTask}
                         handleShow={handleShowEdit}
                         previousName={(name) => setTaskName(name)}
                         previousId={(id) => setTaskId(id)}
                         update={setUpdate}
+                        updateFilter={updateFilter}
+                        setUpdateFilter={setUpdateFilter}
                     />
                 </Route>
                 <Route path='/Private'>
                     <Sidebar names={props.filters} filter='Private' filterTasks={setTasks}/>
                     <TaskList
                         filter='Private'
-                        tasks={tasks.filter(t => t.priv === 1)}
+                        filterTasks={setTasks}
+                        tasks={tasks}
                         deleteTask={deleteTask}
                         handleShow={handleShowEdit}
                         previousName={(name) => setTaskName(name)}
                         previousId={(id) => setTaskId(id)}
                         update={setUpdate}
+                        updateFilter={updateFilter}
+                        setUpdateFilter={setUpdateFilter}
                     />
                 </Route>
 
@@ -153,6 +162,7 @@ function MainContent(props) {
                 addTask={addTask}
                 tasks={tasks}
                 setUpdate={setUpdate}
+                setUpdateFilter={setUpdateFilter}
             />
             <EditTaskForm
                 show={showEdit}

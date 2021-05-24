@@ -26,7 +26,7 @@ function AddTaskForm(props) {
 
     const haldleSubmit = (event) => {
         event.preventDefault();
-        if (description === '' || props.tasks.map(t => t.description).includes(description) || deadline === '' || dayjs(deadline).isBefore(dayjs(), 'day')) {
+        if (description === '' || props.tasks.map(t => t.description).includes(description) || dayjs(deadline).isBefore(dayjs(), 'day')) {
 
             if (dayjs(deadline).isBefore(dayjs(), 'day'))
                 setErrorMessage('Select a valid date');
@@ -46,7 +46,8 @@ function AddTaskForm(props) {
             async function addTask() {
                 const response = await addNewTask(task);
                 if (response.ok) {
-                    props.setUpdate(true);
+                    //props.setUpdate(true);
+                    props.setUpdateFilter(true);
                 }
             }
 

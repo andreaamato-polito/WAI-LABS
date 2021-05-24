@@ -14,7 +14,7 @@ function Task(description, important, priv, deadline, completed, user) {
 
 
 function EditTaskForm(props) {
-    const [description, setDescription] = useState(props.taskName);
+    const [description, setDescription] = useState('');
     const [important, setImportant] = useState(0);
     const [priv, setPriv] = useState(0);
     const [deadline, setDeadline] = useState('');
@@ -25,28 +25,27 @@ function EditTaskForm(props) {
     const haldleSubmit = (event) => {
         event.preventDefault();
 
-        if (deadline === '') {
-            setErrorMessage('A task must have a date');
-        } else {
-            setErrorMessage('');
-            setImportant(0);
-            setPriv(0);
-           
-            //const task = { name: props.taskName, urgent: important, priv: priv, date: deadline };
-            const task = new Task(description, important, priv, deadline, completed, user);
-            
-            async function updateT() {
-                const response = await updateTask(props.taskId, task);
-                if (response.ok) {
-                     props.setUpdate(true);
-                }
-            }
+        setErrorMessage('');
+        setImportant(0);
+        setPriv(0);
 
-            updateT();
+        let task = new Task(props.taskName, important, priv, deadline, completed, user);
 
-            //props.updateTask(task); 
-            props.handleClose();
+        if (description != '') {
+            task = new Task(description, important, priv, deadline, completed, user);
         }
+        async function updateT() {
+            const response = await updateTask(props.taskId, task);
+            if (response.ok) {
+                props.setUpdate(true);
+            }
+        }
+
+        updateT();
+
+        //props.updateTask(task); 
+        props.handleClose();
+
     }
 
 
@@ -67,14 +66,14 @@ function EditTaskForm(props) {
                         label="Important"
                         type={'checkbox'}
                         id={'checkbox-important'}
-                        onChange={() => setImportant( important => !important )}
+                        onChange={() => setImportant(important => !important)}
                     />
                     <Form.Check
                         className="form"
                         label="Private"
                         type={'checkbox'}
                         id={'checkbox-private'}
-                        onChange={() => setPriv( priv => !priv )}
+                        onChange={() => setPriv(priv => !priv)}
                     />
                     <Form.Control
                         type='datetime-local'
