@@ -5,27 +5,27 @@ import TaskList from './TaskList.js';
 import AddTaskForm from './AddTaskForm.js';
 import EditTaskForm from './EditTaskForm.js';
 import React, { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router';
 import dayjs from 'dayjs';
 import { loadAllTasks, applyFilter } from './API.js';
+import { LoginForm, LogoutButton } from './LoginComponents';
 
 function MainContent(props) {
     const [tasks, setTasks] = useState(null);
     const [show, setShow] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-
     const [taskName, setTaskName] = useState('');
     const [taskId, setTaskId] = useState(-1);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
     const handleCloseEdit = () => setShowEdit(false);
     const handleShowEdit = () => setShowEdit(true);
 
     const [update, setUpdate] = useState(true);
-
     const [updateFilter, setUpdateFilter] = useState(true);
+
+    
 
 
     const deleteTask = (id) => {
