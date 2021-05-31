@@ -41,6 +41,8 @@ function AddTaskForm(props) {
             setErrorMessage('');
             setDeadline('');
             setDescription('');
+            setImportant(0);
+            setPriv(0);
             const task = new Task(description, important, priv, deadline, completed, user);
 
             async function addTask() {
