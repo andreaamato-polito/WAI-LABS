@@ -1,4 +1,4 @@
-import { Row, Button, Container, Alert } from 'react-bootstrap';
+import { Row, Button } from 'react-bootstrap';
 import { Plus } from 'react-bootstrap-icons';
 import Sidebar from './Sidebar.js';
 import TaskList from './TaskList.js';
@@ -6,9 +6,8 @@ import AddTaskForm from './AddTaskForm.js';
 import EditTaskForm from './EditTaskForm.js';
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router';
-import dayjs from 'dayjs';
-import { loadAllTasks, applyFilter, getUserInfo, logIn, logOut } from './API.js';
-import { LoginForm, LogoutButton } from './LoginComponents';
+import { loadAllTasks, getUserInfo, logIn, logOut } from './API.js';
+import { LoginForm } from './LoginComponents';
 import NavigationBar from './NavigationBar.js';
 
 
@@ -26,11 +25,12 @@ function MainContent(props) {
     const handleCloseEdit = () => setShowEdit(false);
     const handleShowEdit = () => setShowEdit(true);
 
-    const [update, setUpdate] = useState(true);
-    const [updateFilter, setUpdateFilter] = useState(true);
+    const [update, setUpdate] = useState(false);
 
     const [message, setMessage] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
+
+    const [selectedFilter, setSelectedFilter] = useState('All');
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -48,27 +48,17 @@ function MainContent(props) {
 
     useEffect(() => {
         if (loggedIn) {
-            if (update) {
-                async function loadTasks() {
-                    const loadedTasks = await loadAllTasks();
-                    setTasks(loadedTasks); //this 'worked'
-                    setUpdate(false);
-                };
-                loadTasks().catch(err => {
-                    setMessage({ msg: "Impossible to load your tasks! Please, try again later...", type: 'danger' });
-                    console.error(err);
-                });
-            }
+            async function loadTasks() {
+                const loadedTasks = await loadAllTasks();
+                setTasks(loadedTasks); //this 'worked'
+            };
+            loadTasks().catch(err => {
+                setMessage({ msg: "Impossible to load your tasks! Please, try again later...", type: 'danger' });
+                console.error(err);
+            });
         }
-    }, [update, loggedIn]);
 
-    const handleErrors = (err) => {
-        if (err.errors)
-            setMessage({ msg: err.errors[0].msg + ': ' + err.errors[0].param, type: 'danger' });
-        else
-            setMessage({ msg: err.error, type: 'danger' });
-        setUpdate(true);
-    }
+    }, [loggedIn]);
 
     const deleteTask = (id) => {
         setTasks((oldTasks) => oldTasks.filter(t => t.id !== id));
@@ -111,9 +101,9 @@ function MainContent(props) {
 
     return (
         <React.Fragment>
-            
 
-            <NavigationBar loggedIn={loggedIn} doLogOut={doLogOut} message={message} deleteMessage={()=>setMessage('')}/>
+
+            <NavigationBar loggedIn={loggedIn} doLogOut={doLogOut} message={message} deleteMessage={() => setMessage('')} />
 
             <Row>
 
@@ -121,27 +111,137 @@ function MainContent(props) {
                     <Route path="/login">
                         {loggedIn ? <Redirect to="/" /> : <LoginForm login={doLogIn} />}
                     </Route>
-                    {routes.map(route =>
+                    <Route path='/' exact>
+                        {loggedIn ?
+                            <React.Fragment>
+                                <Sidebar names={props.filters} filter='All' filterTasks={setTasks} />
+                                <TaskList
+                                    filter='All'
+                                    filterTasks={setTasks}
+                                    tasks={tasks}
+                                    deleteTask={deleteTask}
+                                    handleShow={handleShowEdit}
+                                    previousName={(name) => setTaskName(name)}
+                                    previousId={(id) => setTaskId(id)}
+                                    update={update}
+                                    setUpdate={setUpdate}
+                                />
+                            </React.Fragment>
+                            : <Redirect to="/login" />}
+                    </Route>
+                    <Route path='/All'>
+                        {loggedIn ?
+                            <React.Fragment>
+                                <Sidebar names={props.filters} filter='All' filterTasks={setTasks} />
+                                <TaskList
+                                    filter='All'
+                                    filterTasks={setTasks}
+                                    tasks={tasks}
+                                    deleteTask={deleteTask}
+                                    handleShow={handleShowEdit}
+                                    previousName={(name) => setTaskName(name)}
+                                    previousId={(id) => setTaskId(id)}
+                                    update={update}
+                                    setUpdate={setUpdate}
+                                />
+                            </React.Fragment>
+                            : <Redirect to="/login" />}
+                    </Route>
+
+                    <Route path='/Important'>
+                        {loggedIn ?
+                            <React.Fragment>
+                                <Sidebar names={props.filters} filter='Important' filterTasks={setTasks} />
+                                <TaskList
+                                    filter='Important'
+                                    filterTasks={setTasks}
+                                    tasks={tasks}
+                                    deleteTask={deleteTask}
+                                    handleShow={handleShowEdit}
+                                    previousName={(name) => setTaskName(name)}
+                                    previousId={(id) => setTaskId(id)}
+                                    update={update}
+                                    setUpdate={setUpdate}
+                                />
+                            </React.Fragment>
+                            : <Redirect to="/login" />}
+                    </Route>
+                    <Route path='/Today'>
+                        {loggedIn ?
+                            <React.Fragment>
+                                <Sidebar names={props.filters} filter='Today' filterTasks={setTasks} />
+                                <TaskList
+                                    filter='Today'
+                                    filterTasks={setTasks}
+                                    tasks={tasks}
+                                    deleteTask={deleteTask}
+                                    handleShow={handleShowEdit}
+                                    previousName={(name) => setTaskName(name)}
+                                    previousId={(id) => setTaskId(id)}
+                                    update={update}
+                                    setUpdate={setUpdate}
+                                />
+                            </React.Fragment>
+                            : <Redirect to="/login" />}
+                    </Route>
+                    <Route path='/Next7Days'>
+                        {loggedIn ?
+                            <React.Fragment>
+                                <Sidebar names={props.filters} filter='Next 7 Days' filterTasks={setTasks} />
+                                <TaskList
+                                    filter='Next 7 Days'
+                                    filterTasks={setTasks}
+                                    tasks={tasks}
+                                    deleteTask={deleteTask}
+                                    handleShow={handleShowEdit}
+                                    previousName={(name) => setTaskName(name)}
+                                    previousId={(id) => setTaskId(id)}
+                                    update={update}
+                                    setUpdate={setUpdate}
+                                />
+                            </React.Fragment>
+                            : <Redirect to="/login" />}
+                    </Route>
+                    <Route path='/Private'>
+                        {loggedIn ?
+                            <React.Fragment>
+                                <Sidebar names={props.filters} filter='Private' filterTasks={setTasks} />
+                                <TaskList
+                                    filter='Private'
+                                    filterTasks={setTasks}
+                                    tasks={tasks}
+                                    deleteTask={deleteTask}
+                                    handleShow={handleShowEdit}
+                                    previousName={(name) => setTaskName(name)}
+                                    previousId={(id) => setTaskId(id)}
+                                    update={update}
+                                    setUpdate={setUpdate}
+                                />
+                            </React.Fragment>
+                            : <Redirect to="/login" />}
+                    </Route>
+                    {/*
+                    routes.map(route =>
                         <Route key={route} path={'/' + route}>
                             {loggedIn ?
                                 <React.Fragment>
                                     <Sidebar names={props.filters} filter={route} filterTasks={setTasks} />
                                     <TaskList
-                                        filter={route}
+                                        filter={selectedFilter}
                                         filterTasks={setTasks}
                                         tasks={tasks}
                                         deleteTask={deleteTask}
                                         handleShow={handleShowEdit}
                                         previousName={(name) => setTaskName(name)}
                                         previousId={(id) => setTaskId(id)}
-                                        update={setUpdate}
-                                        updateFilter={updateFilter}
-                                        setUpdateFilter={setUpdateFilter}
+                                        update={update}
+                                        setUpdate={setUpdate}
                                     />
                                 </React.Fragment>
                                 : <Redirect to="/login" />}
                         </Route>
-                    )}
+                    )
+                            */}
 
                 </Switch>
 
@@ -152,7 +252,6 @@ function MainContent(props) {
                     addTask={addTask}
                     tasks={tasks}
                     setUpdate={setUpdate}
-                    setUpdateFilter={setUpdateFilter}
                 />
                 <EditTaskForm
                     show={showEdit}

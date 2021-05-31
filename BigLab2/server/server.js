@@ -162,7 +162,7 @@ app.put('/api/tasks/:id', async (req, res) => {
 app.put('/api/tasks/completed/:id', async (req, res) => {
     const id = req.params.id;
     try { 
-        let task = await dao.getTask(id);
+        let task = await dao.getTask(id, req.user.id);
         await dao.markTask(task, req.user.id);
         res.end();
     }catch (error){
@@ -198,9 +198,10 @@ app.delete('/api/sessions/current', (req, res) => {
 
 // GET /sessions/current
 // check wheter the user is logged in or not
-app.get('/api/sessions/current', (req, res) => {
+app.get('/api/sessions/current', isLoggedIn, (req, res) => {
+    console.log("here");
     if(req.isAuthenticated()){
-        req.status(200).json(req.user);
+        res.status(200).json(req.user);
     }
     else
         res.status(401).json({ error: 'Unauthenticated user!' });

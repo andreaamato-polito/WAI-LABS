@@ -11,11 +11,11 @@ function TaskList(props) {
         async function filterTasks() {
             const filteredTasks = await applyFilter(props.filter.replace(/\s+/g, ''));
             props.filterTasks(filteredTasks);
-            props.setUpdateFilter(false);
+            props.setUpdate(false);
         };
         filterTasks();
 
-    }, [props.filter, props.updateFilter]);
+    }, [props.filter, props.update]);
 
 
     return (
@@ -29,7 +29,7 @@ function TaskList(props) {
                 handleShow={props.handleShow}
                 previousName={props.previousName}
                 previousId={props.previousId}
-                update={props.update}
+                setUpdate={props.setUpdate}
             />)}
         </Col>
     );
@@ -62,7 +62,7 @@ function Task(props) {
                             async function toggle() {
                                 const response = await markTask(props.task.id);
                                 if (response.ok) {
-                                    props.update(true);
+                                    props.setUpdate(true);
                                 }
                             }
 

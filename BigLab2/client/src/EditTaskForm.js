@@ -37,6 +37,7 @@ function EditTaskForm(props) {
         async function updateT() {
             const response = await updateTask(props.taskId, task);
             if (response.ok) {
+
                 props.setUpdate(true);
             }
         }

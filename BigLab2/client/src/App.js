@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import NavigationBar from './NavigationBar.js';
 import MainContent from './MainContent.js';
 import { BrowserRouter as Router } from 'react-router-dom';
 
