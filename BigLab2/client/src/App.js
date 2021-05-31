@@ -12,7 +12,6 @@ class App extends Component {
     return (
       <React.Fragment>
         <Router>
-          <NavigationBar />
           <MainContent filters={filters} />
         </Router>
       </React.Fragment>

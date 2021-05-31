@@ -1,6 +1,8 @@
 import { Form, Button, Alert, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import React from 'react';
+import { BoxArrowRight } from 'react-bootstrap-icons';
+
 
 //import { Redirect } from 'react-router';
 
@@ -48,7 +50,7 @@ function LoginForm(props) {
 function LogoutButton(props) {
     return (
         <Col>
-            <Button variant="outline-primary" onClick={props.logout}>Logout</Button>
+            <BoxArrowRight className='icon-user clickable' onClick={props.logout}/>
         </Col>
     );
 }
