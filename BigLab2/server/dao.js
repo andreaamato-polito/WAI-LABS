@@ -11,10 +11,10 @@ const db = new sqlite.Database('tasks.db', (err) => {
 });
 
 // get all tasks
-exports.listTasks = () => {
+exports.listTasks = (userId) => {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT * FROM tasks';
-        db.all(sql, [], (err, rows) => {
+        const sql = 'SELECT * FROM tasks WHERE user=?';
+        db.all(sql, [userId], (err, rows) => {
             if (err) {
                 reject(err);
                 return;
@@ -34,10 +34,10 @@ exports.listTasks = () => {
 };
 
 
-exports.importantTasks = () => {
+exports.importantTasks = (userId) => {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT * FROM tasks WHERE important=1';
-        db.all(sql, [], (err, rows) => {
+        const sql = 'SELECT * FROM tasks WHERE important=1 AND user=?';
+        db.all(sql, [userId], (err, rows) => {
             if (err) {
                 reject(err);
                 return;
@@ -58,10 +58,10 @@ exports.importantTasks = () => {
 
 
 
-exports.privateTasks = () => {
+exports.privateTasks = (userId) => {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT * FROM tasks WHERE private=1';
-        db.all(sql, [], (err, rows) => {
+        const sql = 'SELECT * FROM tasks WHERE private=1 AND user=?';
+        db.all(sql, [userId], (err, rows) => {
             if (err) {
                 reject(err);
                 return;
@@ -80,10 +80,10 @@ exports.privateTasks = () => {
     });
 };
 
-exports.todayTasks = () => {
+exports.todayTasks = (userId) => {
     return new Promise((resolve, reject) => {
-        const sql = "SELECT * FROM tasks";
-        db.all(sql, (err, rows) => {
+        const sql = "SELECT * FROM tasks WHERE user=?";
+        db.all(sql, [userId], (err, rows) => {
             if (err) {
                 reject(err);
                 return;
@@ -108,10 +108,10 @@ exports.todayTasks = () => {
 };
 
 //YYYY-MM-DD HH:mm
-exports.next7DaysTasks = () => {
+exports.next7DaysTasks = (userId) => {
     return new Promise((resolve, reject) => {
-        const sql = "SELECT * FROM tasks";
-        db.all(sql, (err, rows) => {
+        const sql = "SELECT * FROM tasks WHERE user=?";
+        db.all(sql, [userId], (err, rows) => {
             if (err) {
                 reject(err);
                 return;
@@ -136,10 +136,10 @@ exports.next7DaysTasks = () => {
     });
 };
 
-exports.getTask = (id) => {
+exports.getTask = (id, userId) => {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT * FROM tasks where id=?';
-        db.get(sql, [id], (err, row) => {
+        const sql = 'SELECT * FROM tasks WHERE id=? AND user=?';
+        db.get(sql, [id, userId], (err, row) => {
             if (err) {
                 reject(err);
                 return;
@@ -181,10 +181,10 @@ exports.getLastId = () => {
     });
 };
 
-exports.createTask = (task) => {
+exports.createTask = (task, userId) => {
     return new Promise((resolve, reject) => {
         const sql = 'INSERT INTO tasks(id, description, important, private, deadline, completed, user) VALUES(?, ?, ?, ?, ?, ?, ?)';
-        db.run(sql, [task.id, task.description, task.important, task.private, dayjs(task.deadline).format("YYYY-MM-DD HH:mm"), task.completed, task.user], function (err) {
+        db.run(sql, [task.id, task.description, task.important, task.private, dayjs(task.deadline).format("YYYY-MM-DD HH:mm"), task.completed, userId], function (err) {
             if (err) {
                 reject(err);
                 return;
@@ -194,10 +194,10 @@ exports.createTask = (task) => {
     });
 };
 
-exports.deleteTask = (id) => {
+exports.deleteTask = (id, userId) => {
     return new Promise((resolve, reject) => {
-        const sql = 'DELETE FROM tasks WHERE id=?';
-        db.run(sql, [id], (err) => {
+        const sql = 'DELETE FROM tasks WHERE id=? AND user=?';
+        db.run(sql, [id, userId], (err) => {
             if (err) {
                 reject(err);
                 return;
@@ -207,10 +207,10 @@ exports.deleteTask = (id) => {
     });
 };
 
-exports.updateTask = (task) => {
+exports.updateTask = (task, userId) => {
     return new Promise((resolve, reject) => {
-        const sql = 'UPDATE tasks SET description=?, important=?, private=?, deadline=?, completed=?, user=? WHERE id=?';
-        db.run(sql, [task.description, task.important, task.private, dayjs(task.deadline).format("YYYY-MM-DD HH:mm"), task.completed, task.user, task.id], function (err) {
+        const sql = 'UPDATE tasks SET description=?, important=?, private=?, deadline=?, completed=? WHERE id=? AND user=?';
+        db.run(sql, [task.description, task.important, task.private, dayjs(task.deadline).format("YYYY-MM-DD HH:mm"), task.completed, task.id, userId], function (err) {
             if (err) {
                 reject(err);
                 return;
@@ -220,10 +220,10 @@ exports.updateTask = (task) => {
     });
 };
 
-exports.markTask = (task) => {
+exports.markTask = (task, userId) => {
     return new Promise((resolve, reject) => {
-        const sql = 'UPDATE tasks SET completed=? WHERE id=?';
-        db.run(sql, [!task.completed, task.id], function (err) {
+        const sql = 'UPDATE tasks SET completed=? WHERE id=? AND user=?';
+        db.run(sql, [!task.completed, task.id, userId], function (err) {
             if (err) {
                 reject(err);
                 return;

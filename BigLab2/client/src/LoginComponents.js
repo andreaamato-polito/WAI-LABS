@@ -28,7 +28,10 @@ function LoginForm(props) {
     };
 
     return (
-        <Form>
+        <Form style={{
+            position: 'absolute', left: '50%', top: '40%',
+            transform: 'translate(-50%, -50%)'
+        }}>
             {errorMessage ? <Alert variant='danger'>{errorMessage}</Alert> : ''}
             <Form.Group controlId='username'>
                 <Form.Label>email</Form.Label>
@@ -38,7 +41,7 @@ function LoginForm(props) {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type='password' value={password} onChange={ev => setPassword(ev.target.value)} />
             </Form.Group>
-            <Button onClick={handleSubmit}>Login</Button>
+            <Button onClick={handleSubmit} variant="success">Login</Button>
         </Form>);
 }
 

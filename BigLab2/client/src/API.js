@@ -82,6 +82,7 @@ async function markTask(id){
 }
 
 async function logIn(credentials){
+    //da qui in poi
     let response = await fetch(url+'/api/sessions', {
         method: 'POST',
         headers: {
@@ -89,6 +90,7 @@ async function logIn(credentials){
         },
         body: JSON.stringify(credentials),
     });
+
     if(response.ok){
         const user = await response.json();
         return user.name;
