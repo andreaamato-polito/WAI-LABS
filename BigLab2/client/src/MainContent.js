@@ -10,9 +10,6 @@ import { loadAllTasks, getUserInfo, logIn, logOut } from './API.js';
 import { LoginForm } from './LoginComponents';
 import NavigationBar from './NavigationBar.js';
 
-
-const routes = ["", "All", "Important", "Today", "Next 7 Days", "Private"];
-
 function MainContent(props) {
     const [tasks, setTasks] = useState([]);
     const [show, setShow] = useState(false);
@@ -29,8 +26,6 @@ function MainContent(props) {
 
     const [message, setMessage] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
-
-    const [selectedFilter, setSelectedFilter] = useState('All');
 
     useEffect(() => {
         const checkAuth = async () => {

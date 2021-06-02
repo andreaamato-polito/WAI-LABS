@@ -4,13 +4,12 @@ import dayjs from 'dayjs';
 import { addNewTask } from './API';
 
 
-function Task(description, important, priv, deadline, completed, user) {
+function Task(description, important, priv, deadline, completed) {
     this.description = description,
     this.important = important,
     this.priv = priv,
     this.deadline = deadline,
-    this.completed = completed,
-    this.user = user
+    this.completed = completed
 };
 
 
@@ -20,8 +19,6 @@ function AddTaskForm(props) {
     const [important, setImportant] = useState(0);
     const [priv, setPriv] = useState(0);
     const [deadline, setDeadline] = useState('');
-    const [completed, setCompleted] = useState(0);
-    const [user, setUser] = useState(1)
     const [errorMessage, setErrorMessage] = useState();
 
     const haldleSubmit = (event) => {
@@ -43,7 +40,7 @@ function AddTaskForm(props) {
             setDescription('');
             setImportant(0);
             setPriv(0);
-            const task = new Task(description, important, priv, deadline, completed, user);
+            const task = new Task(description, important, priv, deadline, 0);
 
             async function addTask() {
                 const response = await addNewTask(task);

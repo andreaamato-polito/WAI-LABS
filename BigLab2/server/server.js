@@ -139,7 +139,6 @@ app.put('/api/tasks/:id', async (req, res) => {
     let important = req.body.important;
     let prvt = req.body.priv;
     let deadline = req.body.deadline;
-    let completed = req.body.completed;
     let user = req.user.id;
     //let user = req.body.user;
 
@@ -150,7 +149,6 @@ app.put('/api/tasks/:id', async (req, res) => {
             important: important,
             private: prvt,
             deadline: deadline,
-            completed: completed,
             user: user
         }, req.user.id);
         res.end();

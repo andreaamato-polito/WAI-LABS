@@ -209,8 +209,8 @@ exports.deleteTask = (id, userId) => {
 
 exports.updateTask = (task, userId) => {
     return new Promise((resolve, reject) => {
-        const sql = 'UPDATE tasks SET description=?, important=?, private=?, deadline=?, completed=? WHERE id=? AND user=?';
-        db.run(sql, [task.description, task.important, task.private, dayjs(task.deadline).format("YYYY-MM-DD HH:mm"), task.completed, task.id, userId], function (err) {
+        const sql = 'UPDATE tasks SET description=?, important=?, private=?, deadline=? WHERE id=? AND user=?';
+        db.run(sql, [task.description, task.important, task.private, dayjs(task.deadline).format("YYYY-MM-DD HH:mm"), task.id, userId], function (err) {
             if (err) {
                 reject(err);
                 return;

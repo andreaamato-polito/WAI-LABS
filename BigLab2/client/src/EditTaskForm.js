@@ -3,13 +3,11 @@ import React, { useState } from 'react';
 import { updateTask } from './API';
 
 
-function Task(description, important, priv, deadline, completed, user) {
+function Task(description, important, priv, deadline) {
     this.description = description,
         this.important = important,
         this.priv = priv,
-        this.deadline = deadline,
-        this.completed = completed,
-        this.user = user
+        this.deadline = deadline
 };
 
 
@@ -18,8 +16,6 @@ function EditTaskForm(props) {
     const [important, setImportant] = useState(0);
     const [priv, setPriv] = useState(0);
     const [deadline, setDeadline] = useState('');
-    const [completed, setCompleted] = useState(0);
-    const [user, setUser] = useState(1)
     const [errorMessage, setErrorMessage] = useState();
 
     const haldleSubmit = (event) => {
@@ -29,10 +25,10 @@ function EditTaskForm(props) {
         setImportant(0);
         setPriv(0);
 
-        let task = new Task(props.taskName, important, priv, deadline, completed, user);
+        let task = new Task(props.taskName, important, priv, deadline);
 
         if (description != '') {
-            task = new Task(description, important, priv, deadline, completed, user);
+            task = new Task(description, important, priv, deadline);
         }
         async function updateT() {
             const response = await updateTask(props.taskId, task);
