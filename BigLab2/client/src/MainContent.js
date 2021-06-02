@@ -82,6 +82,7 @@ function MainContent(props) {
         await logOut();
         setLoggedIn(false);
         setTasks([]);
+        setMessage('');
     };
 
     /*
